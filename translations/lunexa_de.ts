@@ -4445,7 +4445,7 @@ Wenn du keinen eigenen Node betreiben kannst, gibt es die Möglichkeit, sich mit
     <message>
         <location filename="../main.qml" line="1345"/>
         <source>Would you like to register Monero GUI Desktop entry?</source>
-        <translation>Möchtest du den LXAGUI Desktop Eintrag registrieren?</translation>
+        <translation>Möchtest du den lunexa-gui-gui Desktop Eintrag registrieren?</translation>
     </message>
     <message>
         <location filename="../main.qml" line="1347"/>

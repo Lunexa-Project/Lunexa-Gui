@@ -59,7 +59,7 @@ ApplicationWindow {
         (persistentSettings.displayWalletNameInTitleBar && walletName
         ? " - " + walletName
         : "")
-    minimumWidth: 850
+    minimumWidth: 950
     minimumHeight: 450
 
     property var currentItem
@@ -2203,7 +2203,7 @@ ApplicationWindow {
     function checkUpdates() {
         const version = Version.GUI_VERSION.match(/\d+\.\d+\.\d+\.\d+/);
         if (version) {
-            walletManager.checkUpdatesAsync("lxagui", "gui", getBuildTag(), version[0]);
+            walletManager.checkUpdatesAsync("lunexa-gui", "gui", getBuildTag(), version[0]);
         } else {
             console.error("failed to parse version number", Version.GUI_VERSION);
         }

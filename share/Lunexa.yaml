@@ -109,7 +109,7 @@ modules:
     post-install:
       - install -Dm755 p2pool $FLATPAK_DEST/bin/p2pool
 
-  - name: lxagui
+  - name: lunexa-gui
     buildsystem: cmake-ninja
     config-opts:
       - -DCMAKE_BUILD_TYPE=Release

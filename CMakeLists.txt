@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
-project(lxagui)
+project(lunexa-gui)
 
 message(STATUS "Initiating compile using CMake ${CMAKE_VERSION}")
 

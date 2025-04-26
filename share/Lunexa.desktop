@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Lunexa GUI
-GenericName=LXAGUI
+GenericName=LunexaGUI
 Comment=Lunexa GUI
 Exec=lunexa-wallet-gui
 Type=Application

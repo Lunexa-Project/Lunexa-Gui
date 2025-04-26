@@ -92,8 +92,8 @@ QString xdgMime(){
     return QString(
         "[Desktop Entry]\n"
         "Name=Lunexa GUI\n"
-        "GenericName=LXAGUI\n"
-        "X-GNOME-FullName=LXAGUI\n"
+        "GenericName=lunexa-gui\n"
+        "X-GNOME-FullName=lunexa-gui\n"
         "Comment=Lunexa GUI\n"
         "Keywords=Lunexa;\n"
         "Exec=%1 %u\n"
@@ -117,7 +117,7 @@ void registerXdgMime(){
     // - Tails written to persistent dotfiles
     QString mime = xdgMime();
     QString appPath = QStandardPaths::writableLocation(QStandardPaths::ApplicationsLocation);
-    QString filePath = QString("%1/lxagui.desktop").arg(appPath);
+    QString filePath = QString("%1/lunexa-gui.desktop").arg(appPath);
 
     if (TailsOS::detect())
     {

@@ -77,7 +77,7 @@ Source: "LICENSE"; DestDir: "{app}"; Flags: ignoreversion
 
 ; Lunexa GUI wallet exe and guide
 Source: "bin\lunexa-wallet-gui.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "bin\lxagui-wallet-guide.pdf"; DestDir: "{app}"; Flags: ignoreversion
+Source: "bin\lunexa-gui-wallet-guide.pdf"; DestDir: "{app}"; Flags: ignoreversion
 
 ; Lunexa CLI wallet
 Source: "bin\extras\lunexa-wallet-cli.exe"; DestDir: "{app}"; Flags: ignoreversion
@@ -326,7 +326,7 @@ end;
 ; Icons in the "Lunexa GUI Wallet" program group
 ; Windows will almost always display icons in alphabetical order, per level, so specify the text accordingly
 Name: "{group}\GUI Wallet"; Filename: "{app}\lunexa-wallet-gui.exe";
-Name: "{group}\GUI Wallet Guide"; Filename: "{app}\lxagui-wallet-guide.pdf"; IconFilename: "{app}\lunexa-wallet-gui.exe"
+Name: "{group}\GUI Wallet Guide"; Filename: "{app}\lunexa-gui-wallet-guide.pdf"; IconFilename: "{app}\lunexa-wallet-gui.exe"
 Name: "{group}\Uninstall GUI Wallet"; Filename: "{uninstallexe}"
 
 ; Sub-folder "Utilities";
