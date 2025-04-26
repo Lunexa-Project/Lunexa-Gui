@@ -232,7 +232,7 @@ The following instructions will fetch Qt from your distribution's repositories i
 
     ```
     git clone --recursive https://github.com/lunexa-project/lunexa-gui-gui.git
-    cd lunexa-gui-gui
+    cd lunexa-gui
     ```
 
 4. Build

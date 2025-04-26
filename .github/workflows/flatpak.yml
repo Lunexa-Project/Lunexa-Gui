@@ -7,7 +7,7 @@ on:
 jobs:
   part1:
     name: Part 1/3
-    if: github.repository == 'lunexa-project/lxagui'
+    if: github.repository == 'lunexa-project/lunexa-gui'
     runs-on: ubuntu-latest
     container:
       image: bilelmoussaoui/flatpak-github-actions:kde-5.15-22.08
@@ -34,7 +34,7 @@ jobs:
       env:
         FLATPAK_BUILDER_N_JOBS: 3
       with:
-        manifest-path: share/org.getmonero.Monero.yaml
+        manifest-path: share/org.getlunexa.Lunexa.yaml
         arch: ${{ matrix.arch }}
         cache: false
         stop-at-module: boost
@@ -50,7 +50,7 @@ jobs:
 
   part2:
     name: Part 2/3
-    if: github.repository == 'lunexa-project/lxagui'
+    if: github.repository == 'lunexa-project/lunexa-gui'
     needs: part1
     runs-on: ubuntu-latest
     container:
@@ -72,7 +72,7 @@ jobs:
         platforms: arm64
 
     - name: Restore flatpak-builder
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4.1.7
       with:
         name: flatpak-builder-${{ matrix.arch }}
 
@@ -84,10 +84,10 @@ jobs:
       env:
         FLATPAK_BUILDER_N_JOBS: 3
       with:
-        manifest-path: share/org.getmonero.Monero.yaml
+        manifest-path: share/org.getlunexa.Lunexa.yaml
         arch: ${{ matrix.arch }}
         cache: false
-        stop-at-module: lxagui
+        stop-at-module: lunexa-gui
 
     - name: Tar flatpak-builder
       run: tar -cvf flatpak-builder.tar .flatpak-builder
@@ -100,7 +100,7 @@ jobs:
 
   part3:
     name: Part 3/3
-    if: github.repository == 'lunexa-project/lxagui'
+    if: github.repository == 'lunexa-project/lunexa-gui'
     needs: [part1, part2]
     runs-on: ubuntu-latest
     container:
@@ -117,8 +117,8 @@ jobs:
 
     - name: Add version and date
       run: |
-        sed -i 's/<version>/${{ github.event.release.tag_name }}/g' $GITHUB_WORKSPACE/share/org.getmonero.Monero.metainfo.xml
-        sed -i 's/<date>/'"$(date '+%F')"'/g' $GITHUB_WORKSPACE/share/org.getmonero.Monero.metainfo.xml
+        sed -i 's/<version>/${{ github.event.release.tag_name }}/g' $GITHUB_WORKSPACE/share/org.getlunexa.Lunexa.metainfo.xml
+        sed -i 's/<date>/'"$(date '+%F')"'/g' $GITHUB_WORKSPACE/share/org.getlunexa.Lunexa.metainfo.xml
 
     - name: Install deps
       run: dnf -y install docker
@@ -129,7 +129,7 @@ jobs:
         platforms: arm64
 
     - name: Restore flatpak-builder
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4.1.7
       with:
         name: flatpak-builder-${{ matrix.arch }}
 
@@ -141,13 +141,13 @@ jobs:
       env:
         FLATPAK_BUILDER_N_JOBS: 3
       with:
-        manifest-path: share/org.getmonero.Monero.yaml
+        manifest-path: share/org.getlunexa.Lunexa.yaml
         arch: ${{ matrix.arch }}
         cache: false
 
     - name: Validate AppData
       working-directory: flatpak_app/files/share/appdata
-      run: appstream-util validate org.getmonero.Monero.appdata.xml
+      run: appstream-util validate org.getlunexa.Lunexa.appdata.xml
 
     - name: Delete flatpak-builder
       uses: geekyeggo/delete-artifact@v2
@@ -159,11 +159,11 @@ jobs:
       run: |
         echo "Hashes of the ${{ matrix.arch }} binaries:" >> $GITHUB_STEP_SUMMARY
         echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-        for bin in monero-blockchain-ancestry monero-blockchain-depth monero-blockchain-export monero-blockchain-import monero-blockchain-mark-spent-outputs monero-blockchain-prune monero-blockchain-prune-known-spent-data monero-blockchain-stats monero-blockchain-usage lunexad monero-gen-ssl-cert monero-gen-trusted-multisig monero-wallet-cli lunexa-wallet-gui monero-wallet-rpc p2pool; do sha256sum $bin; done >> $GITHUB_STEP_SUMMARY
+        for bin in lunexa-blockchain-ancestry lunexa-blockchain-depth lunexa-blockchain-export lunexa-blockchain-import lunexa-blockchain-mark-spent-outputs lunexa-blockchain-prune lunexa-blockchain-prune-known-spent-data lunexa-blockchain-stats lunexa-blockchain-usage lunexad lunexa-gen-ssl-cert lunexa-gen-trusted-multisig lunexa-wallet-cli lunexa-wallet-gui lunexa-wallet-rpc p2pool; do sha256sum $bin; done >> $GITHUB_STEP_SUMMARY
         echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
         echo "An example command to check hashes:" >> $GITHUB_STEP_SUMMARY
         echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-        echo "$ flatpak run --command=sha256sum org.getmonero.Monero /app/bin/lunexa-wallet-gui" >> $GITHUB_STEP_SUMMARY
+        echo "$ flatpak run --command=sha256sum org.getlunexa.Lunexa /app/bin/lunexa-wallet-gui" >> $GITHUB_STEP_SUMMARY
         echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
 
     - name: Publish to Flathub Beta
