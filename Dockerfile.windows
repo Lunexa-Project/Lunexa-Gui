@@ -14,7 +14,7 @@ RUN update-alternatives --set x86_64-w64-mingw32-g++ $(which x86_64-w64-mingw32-
 
 RUN git clone -b v0.18.2.0 --depth 1 https://github.com/lunexa-project/lunexa && \
     cd lunexa && \
-    git reset --hard 99be9a044f3854f339548e2d99c539c18d7b1b01 && \
+    git reset --hard e23e4303a4caa8272faee7819ea6ee42c7b863e2 && \
     cp -a contrib/depends / && \
     cd .. && \
     rm -rf lunexa

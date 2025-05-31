@@ -1143,9 +1143,9 @@ ApplicationWindow {
 
     objectName: "appWindow"
     visible: true
-    width: screenAvailableWidth > 980
-        ? 980
-        : Math.min(screenAvailableWidth, 800)
+    width: screenAvailableWidth > 1080
+        ? 1080
+        : Math.min(screenAvailableWidth, 900)
     height: screenAvailableHeight > maxWindowHeight
         ? maxWindowHeight
         : Math.min(screenAvailableHeight, 700)
