@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2019, The Monero Project
+// Copyright (c) 2014-2024, The Monero Project
 //
 // All rights reserved.
 //
@@ -529,6 +529,69 @@ bool Wallet::scanTransactions(const QVector<QString> &txids)
     return m_walletImpl->scanTransactions(c);
 }
 
+void Wallet::setupBackgroundSync(const Wallet::BackgroundSyncType background_sync_type, const QString &wallet_password)
+{
+    qDebug() << "Setting up background sync";
+    bool refreshEnabled = m_refreshEnabled;
+    pauseRefresh();
+
+    // run inside scheduler because of lag when stopping/starting refresh
+    m_scheduler.run([this, refreshEnabled, background_sync_type, &wallet_password] {
+        m_walletImpl->setupBackgroundSync(
+            static_cast<Lunexa::Wallet::BackgroundSyncType>(background_sync_type),
+            wallet_password.toStdString(),
+            Lunexa::optional<std::string>());
+        if (refreshEnabled)
+            startRefresh();
+        emit backgroundSyncSetup();
+    });
+}
+
+Wallet::BackgroundSyncType Wallet::getBackgroundSyncType() const
+{
+    return static_cast<BackgroundSyncType>(m_walletImpl->getBackgroundSyncType());
+}
+
+bool Wallet::isBackgroundWallet() const
+{
+    return m_walletImpl->isBackgroundWallet();
+}
+
+bool Wallet::isBackgroundSyncing() const
+{
+    return m_walletImpl->isBackgroundSyncing();
+}
+
+void Wallet::startBackgroundSync()
+{
+    qDebug() << "Starting background sync";
+    bool refreshEnabled = m_refreshEnabled;
+    pauseRefresh();
+
+    // run inside scheduler because of lag when stopping/starting refresh
+    m_scheduler.run([this, refreshEnabled] {
+        m_walletImpl->startBackgroundSync();
+        if (refreshEnabled)
+            startRefresh();
+        emit backgroundSyncStarted();
+    });
+}
+
+void Wallet::stopBackgroundSync(const QString &password)
+{
+    qDebug() << "Stopping background sync";
+    bool refreshEnabled = m_refreshEnabled;
+    pauseRefresh();
+
+    // run inside scheduler because of lag when stopping/starting refresh
+    m_scheduler.run([this, password, refreshEnabled] {
+        m_walletImpl->stopBackgroundSync(password.toStdString());
+        if (refreshEnabled)
+            startRefresh();
+        emit backgroundSyncStopped();
+    });
+}
+
 bool Wallet::refresh(bool historyAndSubaddresses /* = true */)
 {
     refreshingSet(true);
@@ -1010,7 +1073,7 @@ void Wallet::setWalletCreationHeight(quint64 height)
 
 QString Wallet::getDaemonLogPath() const
 {
-    return QString::fromStdString(m_walletImpl->getDefaultDataDir()) + "/lunexa.log";
+    return QString::fromStdString(m_walletImpl->getDefaultDataDir()) + "/bitmonero.log";
 }
 
 QString Wallet::getRing(const QString &key_image)
